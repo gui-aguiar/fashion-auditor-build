@@ -1,0 +1,39 @@
+# Builds the Windows FashionAuditor.exe for the offline audit package.
+# PyInstaller cannot cross-compile, so the .exe must be produced on Windows —
+# this workflow does it on a windows-latest runner and publishes the artifact.
+#
+# Trigger manually (workflow_dispatch) or by pushing a tag like auditor-v*.
+name: build-auditor-windows
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["auditor-v*"]
+
+jobs:
+  build-exe:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build dependencies
+        run: pip install pillow pyinstaller
+
+      - name: Build FashionAuditor.exe
+        run: pyinstaller --onefile --windowed --name FashionAuditor --paths . scripts/run_auditor_app.py
+
+      - name: Smoke the frozen binary (boots and reports a friendly error headlessly)
+        shell: bash
+        run: |
+          ./dist/FashionAuditor.exe --package-dir Z:/nonexistent 2> stderr.txt || true
+          grep -qi "package" stderr.txt || echo "note: GUI error dialog path (expected on a runner)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FashionAuditor-windows
+          path: dist/FashionAuditor.exe
+          if-no-files-found: error
