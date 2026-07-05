@@ -24,7 +24,7 @@ jobs:
         run: pip install pillow pyinstaller
 
       - name: Build FashionAuditor.exe
-        run: pyinstaller --onefile --windowed --name FashionAuditor --paths . scripts/run_auditor_app.py
+        run: pyinstaller --onefile --windowed --name FashionAuditor --paths . run_auditor_app.py
 
       - name: Smoke the frozen binary (boots and reports a friendly error headlessly)
         shell: bash
