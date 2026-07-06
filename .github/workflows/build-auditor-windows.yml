@@ -13,26 +13,36 @@ on:
 jobs:
   build-exe:
     runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
+    timeout-minutes: 20
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install build dependencies
         run: pip install pillow pyinstaller
 
+      - name: Smoke import
+        run: python -c "import auditor_app; print('import ok')"
+
       - name: Build FashionAuditor.exe
         run: pyinstaller --onefile --windowed --name FashionAuditor --paths . run_auditor_app.py
 
-      - name: Smoke the frozen binary (boots and reports a friendly error headlessly)
-        shell: bash
+      - name: Verify exe exists
+        shell: pwsh
         run: |
-          ./dist/FashionAuditor.exe --package-dir Z:/nonexistent 2> stderr.txt || true
-          grep -qi "package" stderr.txt || echo "note: GUI error dialog path (expected on a runner)"
+          if (!(Test-Path "dist/FashionAuditor.exe")) {
+            throw "FashionAuditor.exe not found"
+          }
+          Get-Item "dist/FashionAuditor.exe"
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
           name: FashionAuditor-windows
           path: dist/FashionAuditor.exe
