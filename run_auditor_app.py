@@ -24,7 +24,7 @@ if not getattr(sys, "frozen", False):                       # dev mode: repo imp
     if ROOT not in sys.path:
         sys.path.insert(0, ROOT)
 
-from src.auditor_app.app import AuditorApp  # noqa: E402
+from auditor_app.app import AuditorApp  # noqa: E402
 
 
 def resolve_package_dir(cli_value: str = None) -> str:
