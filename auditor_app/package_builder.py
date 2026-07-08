@@ -42,51 +42,67 @@ README_AUDITOR = """COMO USAR O FASHION AUDITOR (revisão de produtos)
 ==================================================
 
 1. COMO ABRIR
-   - Dê dois cliques no arquivo "FashionAuditor" (ou "FashionAuditor.exe" no Windows).
+   - Dê dois cliques no arquivo "FashionAuditor.exe" (Windows) ou "FashionAuditor" (Mac).
+   - Windows pode mostrar um aviso azul do SmartScreen na primeira vez:
+     clique em "Mais informações" e depois "Executar assim mesmo". É esperado,
+     porque o aplicativo não tem assinatura digital paga.
    - O programa abre mostrando o primeiro produto do lote.
    - Escreva seu nome no campo "Seu nome" (canto superior).
 
 2. COMO REVISAR UM PRODUTO
-   - Olhe a foto e as informações do produto.
-   - Se aparecer "Sugestão do modelo", ela é só um palpite do computador:
-     você pode clicar em "⬇ Usar sugestão" e depois corrigir o que quiser.
-     A palavra final é SEMPRE sua.
-   - Preencha à direita: Tipo do produto, Comprimento, Fit e Status da revisão.
-   - Use "Notas do produto" para observações livres (ex.: "foto ruim, parece midi").
-   - Use os botões "◀ imagem / imagem ▶" para ver as outras fotos.
+   - Os campos JÁ VÊM PREENCHIDOS com a sugestão do computador (quando existe).
+     Seu trabalho é OLHAR A FOTO e corrigir o que estiver errado.
+     Se concordar com tudo, confira e passe para o próximo.
+   - Campos: Tipo do produto, Comprimento, Fit/Modelagem e Status da revisão.
+   - "Observações da peça": escreva livremente qualquer coisa útil. Exemplos:
+       "Imagem cortada, não dá para avaliar comprimento."
+       "Parece midi, mas a foto não mostra a barra inteira."
+       "Produto parece macacão, não vestido."
+       "Imagem boa para tecido/estampa, mas ruim para comprimento."
+   - Use "◀ imagem / imagem ▶" para ver as outras fotos do produto.
    - Use "◀ Anterior / Próximo ▶" para trocar de produto (o app salva sozinho).
+   - O botão "❓ Ajuda" dentro do app repete estas explicações.
 
-3. O QUE SIGNIFICA "NAO_AVALIAVEL"
-   - Se a foto NÃO deixa você ter certeza (ex.: vestido cortado na foto, não dá
-     para ver a barra), escolha "nao_avaliavel" em vez de chutar.
-   - Nunca chute: é melhor marcar nao_avaliavel do que errar.
+3. A FOTO NUNCA FICA CORTADA
+   - Por padrão a foto é ajustada para caber INTEIRA na janela
+     (modo "Ajustar à janela"). Pode redimensionar a janela à vontade.
+   - Para ver detalhes, clique em "Tamanho real" e use as barras de rolagem.
 
-4. COMO MARCAR IMAGEM CORTADA / RUIM
+4. O QUE SIGNIFICA CADA OPÇÃO (importante!)
+   - "Outro": você TEM certeza de que não é vestido nem macacão (é outra peça).
+   - "Não sei": você não conseguiu identificar com segurança.
+   - "Não avaliável pela imagem": o atributo existe, mas a foto não permite
+     julgar. Ex.: foto cortada não mostra a barra -> comprimento não avaliável.
+     NUNCA chute: é melhor "Não avaliável" do que errar.
+   - "Imagens ruins/insuficientes" (status): problema geral das fotos do produto.
+   - "Dúvida" (status): você tem uma hipótese, mas sem certeza — escreva a
+     hipótese em "Observações da peça".
+
+5. COMO AVALIAR CADA IMAGEM
    - Na caixa "Avaliação DESTA imagem" (embaixo da foto):
-     - "Tipo de vista": full_body (corpo inteiro), cropped (cortada), detail
-       (detalhe), back (costas), flat_lay (peça deitada).
-     - "Serve p/ comprimento?": responda "no" se a foto não mostra a barra.
-     - "Serve p/ fit?": responda "no" se não dá para ver o caimento.
-     - "Serve p/ outros atributos?": "yes" se a foto mostra bem tecido, manga,
-       decote etc. (mesmo cortada, pode servir para outras coisas).
+     - "Tipo da imagem": Corpo inteiro, Cortada, Detalhe, Costas,
+       Produto sem modelo (flat lay) ou Não sei.
+     - "Serve p/ comprimento?": "Não" se a foto não mostra a barra.
+     - "Serve p/ fit?": "Não" se não dá para ver o caimento.
+     - "Serve p/ outros atributos?": "Sim" se mostra bem tecido, manga, decote
+       etc. (mesmo cortada, pode servir para outras coisas no futuro).
 
-5. ADICIONAR UMA PEÇA/IMAGEM NOVA
+6. ADICIONAR UMA PEÇA/IMAGEM NOVA
    - Botão "➕ Adicionar produto/imagem": escolha uma ou mais fotos do seu
      computador; o app copia para dentro do pacote e cria um item novo para
      você revisar como os demais.
 
-6. COMO SALVAR
+7. COMO SALVAR
    - O app salva automaticamente quando você troca de produto e ao fechar.
    - O botão "💾 Salvar" força um salvamento a qualquer momento.
    - Pode fechar e abrir de novo: você continua de onde parou.
 
-7. O QUE DEVOLVER NO FINAL
+8. O QUE DEVOLVER NO FINAL
    - Quando terminar, clique em "📤 Exportar resultado final".
    - Envie de volta o arquivo:  output/reviewed_results_package.zip
    - (Se preferir, pode enviar output/reviewed_results.csv e
       output/reviewed_results.jsonl.)
 
-Qualquer dúvida sobre um produto, use "Notas do produto" e marque Status = doubt.
 Obrigado! 💜
 """
 

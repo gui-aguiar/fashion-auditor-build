@@ -8,10 +8,10 @@ Package-dir resolution order:
   3. current working directory, if it looks like a package.
 
 Dev usage:
-  python scripts/run_auditor_app.py --package-dir data/auditor_packages/lancaperfume_001
+  python run_auditor_app.py --package-dir <auditor-package-folder>
 
 Build (run on the TARGET OS — a Windows .exe must be built on Windows):
-  pyinstaller --onefile --windowed --name FashionAuditor --paths . scripts/run_auditor_app.py
+  pyinstaller --onefile --windowed --name FashionAuditor --paths . run_auditor_app.py
 """
 from __future__ import annotations
 
@@ -20,11 +20,11 @@ import os
 import sys
 
 if not getattr(sys, "frozen", False):                       # dev mode: repo imports
-    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    ROOT = os.path.dirname(os.path.abspath(__file__))       # this repo's root
     if ROOT not in sys.path:
         sys.path.insert(0, ROOT)
 
-from auditor_app.app import AuditorApp  # noqa: E402
+from auditor_app.app import AuditorApp  # noqa: E402  (package lives at repo root)
 
 
 def resolve_package_dir(cli_value: str = None) -> str:

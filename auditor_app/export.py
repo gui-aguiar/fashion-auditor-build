@@ -27,6 +27,8 @@ RESULT_FIELDS = (
      "suggested_fit", "suggested_fit_confidence",
      "suggested_needs_review", "suggested_joint_confidence", "suggestion_source",
      "reviewed_product_type", "reviewed_comprimento", "reviewed_fit",
+     "reviewed_product_type_label", "reviewed_comprimento_label",
+     "reviewed_fit_label", "review_status_label",
      "comprimento_evaluable", "fit_evaluable",
      "review_status", "review_notes", "reviewed_by", "reviewed_at",
      "manual_import", "manual_imported_at", "original_import_paths",
@@ -36,11 +38,16 @@ RESULT_FIELDS = (
     + [f"image_02_{s}" for s in _IMAGE_AGG_SUFFIXES]
 )
 
+# canonical values stay the pipeline contract; *_label columns carry the pt-BR text
 IMAGE_FIELDS = ["review_batch_id", "record_origin", "product_id", "image_index",
                 "image_path", "image_url", "original_import_path",
                 "image_view_type", "image_quality",
                 "usable_for_comprimento", "usable_for_fit",
-                "usable_for_future_attributes", "image_review_notes", "reviewed_at"]
+                "usable_for_future_attributes",
+                "image_view_type_label", "image_quality_label",
+                "usable_for_comprimento_label", "usable_for_fit_label",
+                "usable_for_future_attributes_label",
+                "image_review_notes", "reviewed_at"]
 
 
 def _write_csv(path: str, fieldnames: List[str], rows: List[dict]) -> str:
@@ -90,6 +97,13 @@ def _result_row(item: dict, review: dict, batch_id: str, reviewer: str) -> dict:
         "image_urls": ";".join(image_urls),
         "reviewed_comprimento": review.get("reviewed_comprimento", ""),
         "reviewed_fit": review.get("reviewed_fit", ""),
+        "reviewed_product_type_label": models.to_label(
+            "reviewed_product_type", review.get("reviewed_product_type", "")),
+        "reviewed_comprimento_label": models.to_label(
+            "reviewed_comprimento", review.get("reviewed_comprimento", "")),
+        "reviewed_fit_label": models.to_label("reviewed_fit", review.get("reviewed_fit", "")),
+        "review_status_label": models.to_label("review_status",
+                                               review.get("review_status", "")),
         "comprimento_evaluable": models.evaluable(review.get("reviewed_comprimento")),
         "fit_evaluable": models.evaluable(review.get("reviewed_fit")),
         "review_status": review.get("review_status", ""),
@@ -134,6 +148,17 @@ def _image_rows(item: dict, review: dict, batch_id: str) -> List[dict]:
             "usable_for_comprimento": image_review.get("usable_for_comprimento", ""),
             "usable_for_fit": image_review.get("usable_for_fit", ""),
             "usable_for_future_attributes": image_review.get("usable_for_future_attributes", ""),
+            "image_view_type_label": models.to_label(
+                "image_view_type", image_review.get("image_view_type", "")),
+            "image_quality_label": models.to_label(
+                "image_quality", image_review.get("image_quality", "")),
+            "usable_for_comprimento_label": models.to_label(
+                "usable_for_comprimento", image_review.get("usable_for_comprimento", "")),
+            "usable_for_fit_label": models.to_label(
+                "usable_for_fit", image_review.get("usable_for_fit", "")),
+            "usable_for_future_attributes_label": models.to_label(
+                "usable_for_future_attributes",
+                image_review.get("usable_for_future_attributes", "")),
             "image_review_notes": image_review.get("image_review_notes", ""),
             "reviewed_at": review.get("reviewed_at", ""),
         })

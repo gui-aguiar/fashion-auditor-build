@@ -1,25 +1,7 @@
-# Python 3.9+
-openpyxl>=3.1        # read .xlsx (values + formulas)
-requests>=2.31       # image downloads
-tqdm>=4.66           # progress bar
+# FashionAuditor standalone build — runtime deps
+# (Tkinter ships with Python; Pillow decodes/scales the product images)
+pillow>=10.0
 
-# macOS system Python links against LibreSSL; urllib3 v2 warns and can break TLS
-# there. Pinning to v1 keeps HTTPS downloads working reliably.
-urllib3<2
-
-# --- Optional ---
-# Local ML stages (embeddings/training/calibration, Etapas 2-5):
-#   pip install torch torchvision open_clip_torch scikit-learn
-# Local demo app (Etapa 6):
-#   pip install streamlit
-# Auditor desktop app (Etapa: auditor package): Tkinter (stdlib) + Pillow (já presente);
-# para gerar o executável:  pip install pyinstaller  (build no SO-alvo!)
-#
-# The classifier eval (scripts/evaluate_vestidos_classifier.py) only needs an SDK for
-# the REAL providers; the default `mock` provider needs neither SDK nor API key.
-# Install the one you have a key for:
-#   pip install anthropic   # --provider anthropic  (needs ANTHROPIC_API_KEY)
-#   pip install openai      # --provider openai     (needs OPENAI_API_KEY)
-#
-# pandas, only for ad-hoc analysis in a notebook -- the pipeline does NOT import it:
-# pandas>=2.0
+# Dev/build only:
+#   pip install pyinstaller   # to produce the executable (build on the TARGET OS)
+# Tests:  python -m unittest discover tests -v   (stdlib only, no extra deps)
